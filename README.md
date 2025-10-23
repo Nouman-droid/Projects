@@ -14,6 +14,9 @@ The goal is to practice coding and understand how web development works.
 - Projects are for learning and personal practice, not commercial use.
 
 ## Live Demos
-(If deployed, add links here)
+# 🔹 Morse Code Translator
+A simple Morse Code Translator built using HTML, CSS, and JavaScript.  
+[Live Demo on Netlify]([https://your-site-name.netlify.app](https://morse-code-translator-25.netlify.app/))
+
 
  
