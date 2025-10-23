@@ -16,6 +16,6 @@ The goal is to practice coding and understand how web development works.
 ## Live Demos
 ### 🔹 Morse Code Translator
 A simple Morse Code Translator built using HTML, CSS, and JavaScript.  
-[Live Demo on Netlify](https://your-site-name.netlify.app)
+[Live Demo on Netlify](https://morse-code-translator-25.netlify.app/)
 
  
