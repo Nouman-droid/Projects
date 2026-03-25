@@ -1,16 +1,19 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [
-    {title: "Design UI", status: "todo"},
-    {title: "Build backend", status: "inprogress"},
-    {title: "Deploy App", status: "done"}
-];
+// let tasks = JSON.parse(localStorage.getItem("tasks")) || [
+//     {title: "Design UI", status: "todo"},
+//     {title: "Build backend", status: "inprogress"},
+//     {title: "Deploy App", status: "done"}
+// ];
 
-function loadTasks(){
+async function loadTasks(){
 
     document.getElementById("todo").innerHTML = "";
     document.getElementById("inprogress").innerHTML = "";
     document.getElementById("done").innerHTML = "";
 
-    tasks.forEach((task, index) => {
+    const response = await fetch("http://127.0.0.1:8000/tasks");
+    const tasks = await response.json();
+
+    tasks.forEach((task) => {
         const taskDiv = document.createElement("div");
         taskDiv.className = "task";
         taskDiv.innerText = task.title;
@@ -47,17 +50,31 @@ function loadTasks(){
         });
 
         // Update Status
-        statusSelect.onchange = function(){
+        statusSelect.onchange = async function(){
 
-            // const newStatus = statusSelect.value;
+            const newStatus = statusSelect.value;
+            
+            await fetch(`http://127.0.0.1:8000/tasks/${task.id}`,{
+                method: "PUT",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({
+                    status: newStatus
+                })
 
-            tasks[index].status = statusSelect.value;
+            });
+
+            loadTasks();
+            
+            // console.log("Change status to:", statusSelect.value)
+
+            // tasks[index].status = statusSelect.value;
 
             // if(newStatus === "done"){
             //     tasks[index].completedDate = new Date().toISOString().split("T")[0];
             // }
 
-            loadTasks();
         };
 
         // Delete button
@@ -65,7 +82,8 @@ function loadTasks(){
         deleteBtn.innerText = "❌";
 
         deleteBtn.onclick = function(){
-            deleteTask(index);
+            console.log("Deleting task ID:", tasks.id);
+            deleteTask(task.id);
         };
 
         // Adding elements to task
@@ -87,11 +105,11 @@ function loadTasks(){
             document.getElementById("done").appendChild(taskDiv);
         }
 
-        if(task.status === "done" && task.completedDate){
-            const completed = document.createElement("div");
-            completed.innerText = "Completed" + task.completedDate;
-            taskDiv.appendChild(completed);
-        }
+        // if(task.status === "done" && task.completedDate){
+        //     const completed = document.createElement("div");
+        //     completed.innerText = "Completed" + task.completedDate;
+        //     taskDiv.appendChild(completed);
+        // }
 
         // if(task.status !== "done"){
         //     const due = document.createElement("div");
@@ -102,12 +120,24 @@ function loadTasks(){
     });
 }
 
-function createTask(){
+async function createTask(){
 
     const title = prompt("Enter task title");
     // const dueDate = prompt("Enter due date (YYYY-MM-DD)");
 
     if(!title) return;
+
+    await fetch("http://127.0.0.1:8000/tasks", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json", 
+        },
+        body: JSON.stringify({
+            title: title,
+            status: "todo"
+        }) 
+        
+    });
 
     // const taskDiv = document.createElement("div");
     // taskDiv.className = "task";
@@ -115,27 +145,32 @@ function createTask(){
 
     // document.getElementById("todo").appendChild(taskDiv)
 
-    const newTask = {
-        title: title,
-        status: "todo"
-    };
+    // const newTask = {
+    //     title: title,
+    //     status: "todo"
+    // };
 
-    tasks.push(newTask);
+    // tasks.push(newTask);
 
-    saveTasks();
+    // saveTasks();
     
     loadTasks();
 }
 
-function deleteTask(index){
-    tasks.splice(index, 1); 
-    saveTasks();
+async function deleteTask(id){
+
+    await fetch(`http://127.0.0.1:8000/tasks/${id}`, {
+        method: "DELETE"
+    });
+
+    // tasks.splice(index, 1); 
+    // saveTasks();
     loadTasks();
 }
 
-function saveTasks(){
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+// function saveTasks(){
+//     localStorage.setItem("tasks", JSON.stringify(tasks));
+// }
 
 
 
