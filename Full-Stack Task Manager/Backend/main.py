@@ -5,6 +5,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from database import engine, Base, SessionLocal
 from models import Task
+from models import Project
 from schemas import TaskSchema
 from typing import List
 
@@ -84,14 +85,23 @@ def update_task(task_id: int, task: dict, db: Session = Depends(get_db)):
     return db_task
 
 
-# @app.get("/tasks")
-# def get_tasks():
-#     return tasks
+@app.post("/projects")
+def create_project(project: dict, db: Session = Depends(get_db)):
+    new_project = Project(name=project["name"])
+    
+    db.add(new_project)
+    db.commit()
+    db.refresh(new_project)
 
-# @app.post("/tasks")
-# def create_task(task: dict):
-#     tasks.append(task)
-#     return {"message": "Task created"}
+    return new_project
+
+
+@app.get("/projects")
+def get_projects(db: Session = Depends(get_db)):
+    return db.query(Project).all()
+
+
+
 
 # @app.delete("/tasks/{task_id}")
 # def delete_task(task_id: int):
