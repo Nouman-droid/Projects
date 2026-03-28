@@ -172,6 +172,13 @@ async function deleteTask(id){
 //     localStorage.setItem("tasks", JSON.stringify(tasks));
 // }
 
+async function createProject() {
+    const title = prompt("Enter the project title:");
+    
+    if(!title) return;
+}
+
+
 
 
 loadTasks();
