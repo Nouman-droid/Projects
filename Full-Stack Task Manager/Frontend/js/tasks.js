@@ -4,13 +4,56 @@
 //     {title: "Deploy App", status: "done"}
 // ];
 
+let currentProjectId = 1;
+
+async function loadProjects() {
+    const response = await fetch("http://127.0.0.1:8000/projects");
+    const projects = await response.json();
+
+    const projectList = document.getElementById("projectList");
+    projectList.innerHTML = "";
+
+    projects.forEach((project) => {
+        const li = document.createElement("li");
+        li.innerText = project.name;
+        li.style.cursor = "pointer";
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "🗑️";
+        deleteBtn.className = "delete-project-btn";
+
+        deleteBtn.onclick = function(e) {
+            e.stopPropagation();
+
+            if(confirm("Delete this project?")){
+                deleteProject(project.id);
+            }
+        };
+
+        li.appendChild(deleteBtn);
+
+        document.querySelectorAll("#projectList li").forEach(item => {
+            item.classList.remove("active")
+        });
+
+        li.classList.add("active");
+
+        li.onclick = function(){
+            currentProjectId = project.id;
+            loadTasks();
+        }
+
+        projectList.appendChild(li);
+    });
+}
+
 async function loadTasks(){
 
     document.getElementById("todo").innerHTML = "";
     document.getElementById("inprogress").innerHTML = "";
     document.getElementById("done").innerHTML = "";
 
-    const response = await fetch("http://127.0.0.1:8000/tasks");
+    const response = await fetch(`http://127.0.0.1:8000/tasks?project_id=${currentProjectId}`);
     const tasks = await response.json();
 
     tasks.forEach((task) => {
@@ -134,7 +177,8 @@ async function createTask(){
         },
         body: JSON.stringify({
             title: title,
-            status: "todo"
+            status: "todo",
+            project_id: currentProjectId
         }) 
         
     });
@@ -176,9 +220,29 @@ async function createProject() {
     const title = prompt("Enter the project title:");
     
     if(!title) return;
+
+    await fetch("http://127.0.0.1:8000/projects", {
+        method: "POST" ,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: title
+        })
+    });
+
+    loadProjects();
+}
+
+async function deleteProject(id) {
+    await fetch(`http://127.0.0.1:8000/projects/${id}`, {
+        method: "DELETE"
+    });
+    
+    loadProjects();
 }
 
 
 
-
+loadProjects();
 loadTasks();
