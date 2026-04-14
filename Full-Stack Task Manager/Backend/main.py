@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi import Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException
+from fastapi import Query
 from sqlalchemy.orm import Session
 from database import engine, Base, SessionLocal
 from models import Task
@@ -37,8 +38,13 @@ def get_db():
         db.close()
         
 @app.get("/tasks", response_model=List[TaskSchema])
-def get_tasks(db: Session = Depends(get_db)):
-    tasks = db.query(Task).all()
+def get_tasks(project_id: int = Query(None), db: Session = Depends(get_db)):
+    
+    if project_id:
+        tasks = db.query(Task).filter(Task.project_id == project_id).all()
+    else:
+        tasks = db.query(Task).all()
+        
     return tasks
 
 @app.post("/tasks")
@@ -46,7 +52,8 @@ def create_task(task: dict, db: Session = Depends(get_db)):
     
     new_task = Task(
         title = task["title"],
-        status = task["status"]
+        status = task["status"],
+        project_id = task["project_id"]
     )
     
     db.add(new_task)
@@ -103,7 +110,14 @@ def get_projects(db: Session = Depends(get_db)):
 
 
 
-# @app.delete("/tasks/{task_id}")
-# def delete_task(task_id: int):
-#     tasks.pop(task_id)    
-#     return {"message": "Task deleted"}
+@app.delete("/projects/{project_id}")
+def delete_project(project_id:int, db: Session = Depends(get_db)):
+    project = db.query(Project).filter(Project.id == project_id).first()    
+
+    if not project:
+        return {"error": "Project not found"}
+    
+    db.delete(project)
+    db.commit()
+    
+    return {"message": "Project deleted"}

@@ -13,4 +13,4 @@ class Project(Base):
     __tablename__ = "projects"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(Integer)
+    name = Column(String)
