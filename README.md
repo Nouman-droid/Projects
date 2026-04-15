@@ -16,7 +16,8 @@ The goal is to practice coding and understand how web development works.
 ## Live Demos
 ### 🎬 Netflix Clone
 A simple netflix clone built using HTML & CSS.
--[Live Demo on Vercel](https://netflix-clone-kappa-five-17.vercel.app/)
+
+[Live Demo on Vercel](https://netflix-clone-kappa-five-17.vercel.app/)
 
 ### 🔹 Morse Code Translator
 A simple Morse Code Translator built using HTML, CSS, and JavaScript.  
