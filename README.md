@@ -6,7 +6,7 @@ The goal is to practice coding and understand how web development works.
 ## Projects
 - Netflix Clone (HTML, CSS)
 - Morse Code Translator (HTML, CSS, JS)
-- Other mini-projects for practice
+- Full-Stack Task Manager (HTML, CSS, JS, FastAPI(Python), SQLite)
 
 ## Notes
 - Some code logic is inspired by tutorials or ChatGPT.
@@ -17,5 +17,11 @@ The goal is to practice coding and understand how web development works.
 ### 🔹 Morse Code Translator
 A simple Morse Code Translator built using HTML, CSS, and JavaScript.  
 [Live Demo on Netlify](https://morse-code-translator-25.netlify.app/)
+
+### 📂 Full-Stack Task Manager
+A Trello-like task management web application where users can create projects and manage tasks within them.
+Live Demo:
+Frontend - https://projects-one-dun-10.vercel.app/
+Backend - https://task-manager-api-0r6d.onrender.com
 
  
