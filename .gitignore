@@ -2,4 +2,13 @@ ESP32_GPS_TRACKER_AMBULANCE/GPS_Tracker_Final.pptx
 
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
 .venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.DS_Store
