@@ -20,8 +20,8 @@ A simple Morse Code Translator built using HTML, CSS, and JavaScript.
 
 ### 📂 Full-Stack Task Manager
 A Trello-like task management web application where users can create projects and manage tasks within them.
-Live Demo:
-Frontend - https://projects-one-dun-10.vercel.app/
-Backend - https://task-manager-api-0r6d.onrender.com
+
+- Frontend: https://projects-one-dun-10.vercel.app/
+- Backend: https://task-manager-api-0r6d.onrender.com
 
  
