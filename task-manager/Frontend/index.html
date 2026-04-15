@@ -1,11 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    
+    <h1>Task Manager</h1>
+    <div class="container">
+
+        <!-- Projects Sidebar -->
+        <div class="projects">
+
+            <h2>Projects</h2>
+
+            <button onclick="createProject()">+ New Project</button>
+
+            <ul id="projectList">
+                <!-- <li>Portfolio Website</li>
+                <li>Job Application</li> -->
+            </ul>
+        </div>
+
+        <button onclick="createTask()">+ Add Task</button>
+
+        <!-- Task Board -->
+        <div class="board">
+
+            <div class="column">
+                <h3>To Do</h3>
+                <div id="todo"></div>
+            </div>
+
+            <div class="column">
+                <h3>In Progress</h3>
+                <div id="inprogress"></div>
+            </div>
+
+            <div class="column">
+                <h3>Done</h3>
+                <div id="done"></div>
+            </div>
+        </div>
+    </div>
+
+<script src="js/tasks.js"></script>
+
 </body>
+
 </html>
