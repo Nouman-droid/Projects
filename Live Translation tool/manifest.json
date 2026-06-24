@@ -1,0 +1,11 @@
+{
+    "manifest_version": 3,
+    "name": "Live Translator",
+    "version": "1.0",
+
+    "permissions": ["activeTab", "scripting"],
+
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
