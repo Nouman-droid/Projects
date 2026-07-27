@@ -11,5 +11,13 @@
 
     "action": {
         "default_popup": "popup.html"
-    }
+    },
+
+    "content_scripts": [
+        {
+            "js": ["content.js"],
+            "matches": ["<all_urls>"],
+            "css": ["style.css"]
+        }
+    ]
 }
