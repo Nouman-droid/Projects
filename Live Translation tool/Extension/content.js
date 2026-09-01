@@ -17,7 +17,7 @@ function updateSubtitle(newText){
 
 // updateSubtitle("This is a test subtitle");
 
-chrome.runtime.onMessage.addListner((message) => {
+chrome.runtime.onMessage.addListener((message) => {
     if (message.type === "UPDATE_SUBTITLE"){
         updateSubtitle(message.text);
     }

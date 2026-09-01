@@ -1,6 +1,8 @@
 const button = document.getElementById("translateBtn");
 const output = document.getElementById("output");
 
+const noSelectionMessage = "Please select text on the webpage first.";
+
 button.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({
     active: true,
@@ -15,11 +17,18 @@ button.addEventListener("click", async () => {
     }
   });
 
-  output.textContent = result[0].result || "No text selected.";
+  output.textContent = result[0].result.trim();
+
+  if (!selectedText) {
+    output.textContent = noSelectionMessage;
+    return;
+  }
+
+  output.textContent = selectedText;
 
   chrome.tabs.sendMessage(tab.id, {
     type: "UPDATE_SUBTITLE",
-    text: result[0].result || "No text selected."
+    text: selectedText
   });
 
 });
