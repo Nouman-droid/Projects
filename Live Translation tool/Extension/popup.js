@@ -10,10 +10,16 @@ button.addEventListener("click", async () => {
   const result = await chrome.scripting.executeScript({
     target: { tabId: tab.id },
 
-    function: () => {
+    func: () => {
       return window.getSelection().toString();
     }
   });
 
-  output.textContent = result[0].result;
+  output.textContent = result[0].result || "No text selected.";
+
+  chrome.tabs.sendMessage(tab.id, {
+    type: "UPDATE_SUBTITLE",
+    text: result[0].result || "No text selected."
+  });
+
 });
